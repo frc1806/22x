@@ -2,15 +2,19 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystem.DriveTrainSubsystem;
 
 
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
+
   private String m_autoSelected;
-  private final Timer m_timer = new Timer();
+  private final Timer mTimer = new Timer();
+
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
  
@@ -32,8 +36,8 @@ public class Robot extends TimedRobot {
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     m_autoSelected = "None";
     System.out.println("Auto selected: " + m_autoSelected);
-    m_timer.reset();
-    m_timer.start();
+    mTimer.reset();
+    mTimer.start();
     
   }
 
@@ -53,7 +57,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    
+  }
 
   /** This function is called periodically during operator control. */
   @Override
