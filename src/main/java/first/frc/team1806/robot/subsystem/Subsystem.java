@@ -1,4 +1,4 @@
-package frc.robot.subsystem;
+package first.frc.team1806.robot.subsystem;
 
 public interface Subsystem {
     public void writeToLog();

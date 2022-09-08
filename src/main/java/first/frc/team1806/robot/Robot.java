@@ -1,11 +1,11 @@
-package frc.robot;
+package first.frc.team1806.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystem.DriveTrainSubsystem;
+import first.frc.team1806.robot.subsystem.DriveTrainSubsystem;
 
 
 public class Robot extends TimedRobot {

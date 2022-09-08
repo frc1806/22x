@@ -1,4 +1,4 @@
-package frc.robot;
+package first.frc.team1806.robot;
 
 public class RobotMap {
 

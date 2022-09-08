@@ -1,10 +1,10 @@
-package frc.robot.subsystem;
+package first.frc.team1806.robot.subsystem;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
+import first.frc.team1806.robot.RobotMap;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.RobotMap;
 
 public class DriveTrainSubsystem implements Subsystem {
 
