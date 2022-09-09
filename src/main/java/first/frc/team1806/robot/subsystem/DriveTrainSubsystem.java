@@ -3,8 +3,11 @@ package first.frc.team1806.robot.subsystem;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
+import first.frc.team1806.robot.Robot;
 import first.frc.team1806.robot.RobotMap;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 public class DriveTrainSubsystem implements Subsystem {
 
@@ -19,16 +22,16 @@ public class DriveTrainSubsystem implements Subsystem {
 
     private static DriveTrainSubsystem mDriveTrainSubsystem = new DriveTrainSubsystem();
 
-    private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight;
+    private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight; 
+    private MotorControllerGroup GroupLeft = new MotorControllerGroup(leaderLeft, followerLeft);
+    private MotorControllerGroup GroupRight = new MotorControllerGroup(leaderRight, followerRight);
+    private DifferentialDrive DriveTrain = new DifferentialDrive(GroupLeft, GroupRight);
+    private XboxController mDriverController = Robot.getDriverController();
+
     private DriveStates mDriveStates;
-    private DifferentialDrive DriveTrain = new DifferentialDrive(leaderLeft, leaderRight);
 
-    public static DriveTrainSubsystem getInstance() {
-        return mDriveTrainSubsystem;
-    }
-
-    public void setDriveTrain(){
-
+    public void setDriveTrain() {
+        DriveTrain.curvatureDrive(mDriverController.getLeftY(), mDriverController.getLeftX(), mDriverController.getBButton());
     }
 
     public DriveTrainSubsystem(){
@@ -45,9 +48,18 @@ public class DriveTrainSubsystem implements Subsystem {
         
     }
 
+    public synchronized void StopDrive() {
+        if (mDriveStates != DriveStates.NOTHING){
+            mDriveStates = DriveStates.NOTHING;
+        }
+
+        leaderLeft.setVoltage(0);
+        leaderRight.setVoltage(0);
+    }
+    
     @Override
     public void stop() {
-        // TODO Auto-generated method stub
+        
         
     }
 
