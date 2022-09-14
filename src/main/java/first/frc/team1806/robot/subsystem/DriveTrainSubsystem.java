@@ -8,8 +8,6 @@ import first.frc.team1806.robot.RobotMap;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrainSubsystem implements Subsystem {
 
@@ -28,7 +26,10 @@ public class DriveTrainSubsystem implements Subsystem {
         return mDriveTrainSubsystem;
     }
 
-    private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight; 
+    private CANSparkMax leaderLeft;
+    private CANSparkMax leaderRight;
+    private CANSparkMax followerLeft;
+    private CANSparkMax followerRight; 
     private MotorControllerGroup GroupLeft;
     private MotorControllerGroup GroupRight;
     private DifferentialDrive DriveTrain;
