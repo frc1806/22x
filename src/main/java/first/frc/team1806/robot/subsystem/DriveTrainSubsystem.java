@@ -22,16 +22,25 @@ public class DriveTrainSubsystem implements Subsystem {
 
     private static DriveTrainSubsystem mDriveTrainSubsystem = new DriveTrainSubsystem();
 
-    private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight; 
+    public CANSparkMax leaderLeft;
+
+    private CANSparkMax leaderRight;
+
+    private CANSparkMax followerLeft;
+
+    private CANSparkMax followerRight; 
     private MotorControllerGroup GroupLeft = new MotorControllerGroup(leaderLeft, followerLeft);
     private MotorControllerGroup GroupRight = new MotorControllerGroup(leaderRight, followerRight);
     private DifferentialDrive DriveTrain = new DifferentialDrive(GroupLeft, GroupRight);
-    private XboxController mDriverController = Robot.getDriverController();
 
     private DriveStates mDriveStates;
 
-    public void setDriveTrain() {
-        DriveTrain.curvatureDrive(mDriverController.getLeftY(), mDriverController.getLeftX(), mDriverController.getBButton());
+    public DriveTrainSubsystem getInstance(){
+        return mDriveTrainSubsystem;
+    }
+
+    public DifferentialDrive getDriveTrain() {
+        return DriveTrain;
     }
 
     public DriveTrainSubsystem(){
@@ -59,8 +68,7 @@ public class DriveTrainSubsystem implements Subsystem {
     
     @Override
     public void stop() {
-        
-        
+        StopDrive();
     }
 
     @Override

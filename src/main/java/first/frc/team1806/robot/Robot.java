@@ -18,11 +18,9 @@ public class Robot extends TimedRobot {
 
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  private DriveTrainSubsystem mDriveTrainSubsystem = new DriveTrainSubsystem();
+  private DifferentialDrive mDriveTrain = mDriveTrainSubsystem.getDriveTrain();
   public static XboxController DriverController = new XboxController(0);
-  
-  public static XboxController getDriverController(){
-    return DriverController;
-  }
 
   @Override
   public void robotInit() {
@@ -70,7 +68,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    //DriveTrainSubsystem.setDriveTrain();
+    
   }
 
   /** This function is called once when the robot is disabled. */
