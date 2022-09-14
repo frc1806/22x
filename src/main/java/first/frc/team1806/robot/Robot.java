@@ -1,28 +1,16 @@
 package first.frc.team1806.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import first.frc.team1806.robot.subsystem.DriveTrainSubsystem;
 
-
 public class Robot extends TimedRobot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
 
-  private DriveTrainSubsystem mDriveTrainSubsystem = new DriveTrainSubsystem();
-
-  private String m_autoSelected;
-  private final Timer mTimer = new Timer();
-
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private DriveTrainSubsystem mDriveTrainSubsystem = DriveTrainSubsystem.getInstance();
 
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    
   }
 
 
@@ -32,27 +20,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    m_autoSelected = "None";
-    System.out.println("Auto selected: " + m_autoSelected);
-    mTimer.reset();
-    mTimer.start();
     
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
+
   }
 
   /** This function is called once when teleop is enabled. */

@@ -4,11 +4,12 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
 import first.frc.team1806.robot.OI;
-import first.frc.team1806.robot.Robot;
 import first.frc.team1806.robot.RobotMap;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrainSubsystem implements Subsystem {
 
@@ -23,12 +24,16 @@ public class DriveTrainSubsystem implements Subsystem {
 
     private static DriveTrainSubsystem mDriveTrainSubsystem = new DriveTrainSubsystem();
 
-    private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight; 
-    private MotorControllerGroup GroupLeft = new MotorControllerGroup(leaderLeft, followerLeft);
-    private MotorControllerGroup GroupRight = new MotorControllerGroup(leaderRight, followerRight);
-    private DifferentialDrive DriveTrain = new DifferentialDrive(GroupLeft, GroupRight);
+    public static DriveTrainSubsystem getInstance(){
+        return mDriveTrainSubsystem;
+    }
 
-    private XboxController mDriverController = OI.GetDriverController();
+    private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight; 
+    private MotorControllerGroup GroupLeft;
+    private MotorControllerGroup GroupRight;
+    private DifferentialDrive DriveTrain;
+
+    private XboxController mDriverController;
 
     private DriveStates mDriveStates;
 
@@ -38,6 +43,12 @@ public class DriveTrainSubsystem implements Subsystem {
 
         followerLeft = new CANSparkMax(RobotMap.leftFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
         followerRight = new CANSparkMax(RobotMap.rightFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+        GroupLeft = new MotorControllerGroup(leaderLeft, followerLeft);
+        GroupRight = new MotorControllerGroup(leaderRight, followerRight);
+
+        DriveTrain = new DifferentialDrive(GroupLeft, GroupRight);
+        mDriverController = OI.GetDriverController();
     }
 
     @Override
@@ -85,6 +96,11 @@ public class DriveTrainSubsystem implements Subsystem {
     @Override
     public void setupDriverTab() {
         // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void outputToSmartDashboard() {
         
     }
     
