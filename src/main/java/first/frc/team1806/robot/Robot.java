@@ -2,8 +2,6 @@ package first.frc.team1806.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import first.frc.team1806.robot.subsystem.DriveTrainSubsystem;
@@ -13,14 +11,12 @@ public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
 
+  private DriveTrainSubsystem mDriveTrainSubsystem = new DriveTrainSubsystem();
+
   private String m_autoSelected;
   private final Timer mTimer = new Timer();
 
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
-  private DriveTrainSubsystem mDriveTrainSubsystem = new DriveTrainSubsystem();
-  private DifferentialDrive mDriveTrain = mDriveTrainSubsystem.getDriveTrain();
-  public static XboxController DriverController = new XboxController(0);
 
   @Override
   public void robotInit() {
@@ -68,7 +64,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    
+    mDriveTrainSubsystem.ControlDrive();
   }
 
   /** This function is called once when the robot is disabled. */

@@ -3,6 +3,7 @@ package first.frc.team1806.robot.subsystem;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
+import first.frc.team1806.robot.OI;
 import first.frc.team1806.robot.Robot;
 import first.frc.team1806.robot.RobotMap;
 import edu.wpi.first.wpilibj.XboxController;
@@ -33,15 +34,9 @@ public class DriveTrainSubsystem implements Subsystem {
     private MotorControllerGroup GroupRight = new MotorControllerGroup(leaderRight, followerRight);
     private DifferentialDrive DriveTrain = new DifferentialDrive(GroupLeft, GroupRight);
 
+    private XboxController mDriverController = OI.GetDriverController();
+
     private DriveStates mDriveStates;
-
-    public DriveTrainSubsystem getInstance(){
-        return mDriveTrainSubsystem;
-    }
-
-    public DifferentialDrive getDriveTrain() {
-        return DriveTrain;
-    }
 
     public DriveTrainSubsystem(){
         leaderLeft = new CANSparkMax(RobotMap.leftLeader, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -55,6 +50,10 @@ public class DriveTrainSubsystem implements Subsystem {
     public void writeToLog() {
         // TODO Auto-generated method stub
         
+    }
+
+    public void ControlDrive() {
+        DriveTrain.curvatureDrive(mDriverController.getLeftY(), mDriverController.getLeftX(), mDriverController.getBButton());
     }
 
     public synchronized void StopDrive() {
