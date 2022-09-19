@@ -1,16 +1,22 @@
 package first.frc.team1806.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import first.frc.team1806.robot.subsystem.DriveTrainSubsystem;
+import first.frc.team1806.robot.util.XboxController;
 
 public class Robot extends TimedRobot {
 
   private DriveTrainSubsystem mDriveTrainSubsystem = DriveTrainSubsystem.getInstance();
+  private DifferentialDrive DriveTrain = mDriveTrainSubsystem.GetDrive();
+  private XboxController DriverController = OI.GetDriverController();
 
   @Override
   public void robotInit() {
-    
+    ShuffleboardTab CompetitionTab = Shuffleboard.getTab("Main Competition Tab");
+
   }
 
 
@@ -38,7 +44,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    mDriveTrainSubsystem.ControlDrive();
+    DriveTrain.curvatureDrive(DriverController.getLeftJoyY(), DriverController.getRightJoyX(), DriverController.getButtonB());
   }
 
   /** This function is called once when the robot is disabled. */
@@ -64,4 +70,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
+  private void SetupMainCompetitionTab(){
+    
+  }
 }

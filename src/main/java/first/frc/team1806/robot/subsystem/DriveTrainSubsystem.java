@@ -3,9 +3,8 @@ package first.frc.team1806.robot.subsystem;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
-import first.frc.team1806.robot.OI;
 import first.frc.team1806.robot.RobotMap;
-import edu.wpi.first.wpilibj.XboxController;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
@@ -34,8 +33,6 @@ public class DriveTrainSubsystem implements Subsystem {
     private MotorControllerGroup GroupRight;
     private DifferentialDrive DriveTrain;
 
-    private XboxController mDriverController;
-
     private DriveStates mDriveStates;
 
     public DriveTrainSubsystem(){
@@ -49,7 +46,6 @@ public class DriveTrainSubsystem implements Subsystem {
         GroupRight = new MotorControllerGroup(leaderRight, followerRight);
 
         DriveTrain = new DifferentialDrive(GroupLeft, GroupRight);
-        mDriverController = OI.GetDriverController();
     }
 
     @Override
@@ -58,8 +54,8 @@ public class DriveTrainSubsystem implements Subsystem {
         
     }
 
-    public void ControlDrive() {
-        DriveTrain.curvatureDrive(mDriverController.getLeftY(), mDriverController.getLeftX(), mDriverController.getBButton());
+    public DifferentialDrive GetDrive() {
+        return DriveTrain;
     }
 
     public synchronized void StopDrive() {
