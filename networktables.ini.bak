@@ -15,7 +15,7 @@ double "/Shuffleboard/Driver Controller Configuration/Trigger As Digital Deadzon
 double "/Shuffleboard/Driver Controller Configuration/Trigger Deadzone"=0.2
 double "/Shuffleboard/Driver Controller Configuration/Trigger Linearity"=0.32
 double "/Shuffleboard/Driver Controller Configuration/Trigger Minimum Output"=0.04
-double "/Shuffleboard/Main Competition Tab/Auto Delay"=0
+double "/Shuffleboard/Main Competition Tab/Auto Delay"=3.58974
 double "/Shuffleboard/Operator Controller Configuration/Left X Deadzone"=0.12
 double "/Shuffleboard/Operator Controller Configuration/Left X Linearity"=0.32
 double "/Shuffleboard/Operator Controller Configuration/Left X Minimum Output"=0.04

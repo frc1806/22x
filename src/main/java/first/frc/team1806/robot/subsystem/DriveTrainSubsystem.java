@@ -19,10 +19,16 @@ public class DriveTrainSubsystem implements Subsystem {
         NOTHING,
     }
 
+    private DriveStates mDriveStates;
+
     private static DriveTrainSubsystem mDriveTrainSubsystem = new DriveTrainSubsystem();
 
     public static DriveTrainSubsystem getInstance(){
         return mDriveTrainSubsystem;
+    }
+
+    public DriveStates getDriveStates(){
+        return mDriveStates;
     }
 
     private CANSparkMax leaderLeft;
@@ -33,8 +39,6 @@ public class DriveTrainSubsystem implements Subsystem {
     private MotorControllerGroup GroupRight;
     private DifferentialDrive DriveTrain;
 
-    private DriveStates mDriveStates;
-
     public DriveTrainSubsystem(){
         leaderLeft = new CANSparkMax(RobotMap.leftLeader, CANSparkMaxLowLevel.MotorType.kBrushless);
         leaderRight = new CANSparkMax(RobotMap.rightLeader, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -42,10 +46,18 @@ public class DriveTrainSubsystem implements Subsystem {
         followerLeft = new CANSparkMax(RobotMap.leftFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
         followerRight = new CANSparkMax(RobotMap.rightFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
 
+        followerLeft.follow(leaderLeft);
+        followerRight.follow(leaderRight);
+
         GroupLeft = new MotorControllerGroup(leaderLeft, followerLeft);
         GroupRight = new MotorControllerGroup(leaderRight, followerRight);
 
+        GroupLeft.setInverted(true);
+        GroupRight.setInverted(false);
+
         DriveTrain = new DifferentialDrive(GroupLeft, GroupRight);
+
+        mDriveStates = DriveStates.DRIVING;
     }
 
     @Override
@@ -58,7 +70,7 @@ public class DriveTrainSubsystem implements Subsystem {
         return DriveTrain;
     }
 
-    public synchronized void StopDrive() {
+    private synchronized void StopDrive() {
         if (mDriveStates != DriveStates.NOTHING){
             mDriveStates = DriveStates.NOTHING;
         }
