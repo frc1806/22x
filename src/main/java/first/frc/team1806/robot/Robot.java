@@ -1,7 +1,10 @@
 package first.frc.team1806.robot;
 
+import java.sql.Driver;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -14,7 +17,7 @@ import first.frc.team1806.robot.util.XboxController;
 public class Robot extends TimedRobot {
 
   private DriveTrainSubsystem mDriveTrainSubsystem = DriveTrainSubsystem.getInstance();
-  private DifferentialDrive DriveTrain = mDriveTrainSubsystem.GetDrive();
+  //private DifferentialDrive DriveTrain = mDriveTrainSubsystem.GetDrive();
   private XboxController DriverController = OI.GetDriverController();
   private static ShuffleboardTab CompetitionTab;
 
@@ -49,7 +52,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    DriveTrain.curvatureDrive(DriverController.getLeftJoyY(), DriverController.getRightJoyX(), DriverController.getButtonB());
+    mDriveTrainSubsystem.runDrive();
+    
   }
 
   /** This function is called once when the robot is disabled. */
