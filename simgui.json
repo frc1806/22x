@@ -27,6 +27,10 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DifferentialDrive[2]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/MotorControllerGroup[1]": "Motor Controller",
+      "/LiveWindow/Ungrouped/MotorControllerGroup[2]": "Motor Controller",
+      "/Shuffleboard/Main Competition Tab/Driver Controls": "String Chooser",
       "/SmartDashboard/Auto choices": "String Chooser"
     }
   }

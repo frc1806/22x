@@ -5,7 +5,7 @@
       "maximized": "0",
       "style": "1",
       "userScale": "2",
-      "width": "1280",
+      "width": "1358",
       "xpos": "181",
       "ypos": "64"
     }
@@ -14,12 +14,12 @@
     "###FMS": {
       "Collapsed": "0",
       "Pos": "5,540",
-      "Size": "169,184"
+      "Size": "283,146"
     },
     "###Joysticks": {
       "Collapsed": "0",
       "Pos": "245,397",
-      "Size": "796,234"
+      "Size": "796,240"
     },
     "###NetworkTables": {
       "Collapsed": "0",

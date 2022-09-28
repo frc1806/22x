@@ -3,10 +3,8 @@ package first.frc.team1806.robot.subsystem;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
-import first.frc.team1806.robot.OI;
 import first.frc.team1806.robot.RobotMap;
-import first.frc.team1806.robot.util.XboxController;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import first.frc.team1806.robot.util.DriveSignal;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 public class DriveTrainSubsystem implements Subsystem {
@@ -38,8 +36,6 @@ public class DriveTrainSubsystem implements Subsystem {
     private CANSparkMax followerRight; 
     private MotorControllerGroup GroupLeft;
     private MotorControllerGroup GroupRight;
-    private DifferentialDrive DriveTrain;
-    private XboxController mDriverController;
 
     public DriveTrainSubsystem(){
         
@@ -58,25 +54,18 @@ public class DriveTrainSubsystem implements Subsystem {
         GroupLeft.setInverted(true);
         GroupRight.setInverted(false);
 
-        DriveTrain = new DifferentialDrive(GroupLeft, GroupRight);
-        DriveTrain.setSafetyEnabled(true);
-
         mDriveStates = DriveStates.DRIVING;
-        mDriverController = OI.GetDriverController();
     }
 
-    public String getVarsInString(){
-        return leaderLeft.toString() + leaderRight.toString() + followerLeft.toString() + followerRight.toString() + GroupLeft.toString() + GroupRight.toString() + DriveTrain.toString();
+    public void setOpenLoop(DriveSignal signal){
+        leaderLeft.setVoltage(signal.getLeft() * 12);
+        leaderRight.setVoltage(signal.getRight() * 12);
     }
 
     @Override
     public void writeToLog() {
         // TODO Auto-generated method stub
         
-    }
-
-    public void runDrive() {
-        DriveTrain.curvatureDrive(mDriverController.getLeftJoyY(), mDriverController.getRightJoyX(), mDriverController.getButtonB());
     }
 
     private synchronized void StopDrive() {
