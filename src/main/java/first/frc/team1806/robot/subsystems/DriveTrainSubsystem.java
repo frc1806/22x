@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
 import first.frc.team1806.robot.RobotMap;
+import first.frc.team1806.robot.loop.Loop;
+import first.frc.team1806.robot.loop.Looper;
 import first.frc.team1806.robot.util.DriveSignal;
 
 public class DriveTrainSubsystem implements Subsystem {
@@ -28,6 +30,38 @@ public class DriveTrainSubsystem implements Subsystem {
     }
 
     private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight;
+    private Loop mLoop = new Loop() {
+        @Override
+        public void onLoop(double timestamp) {
+            synchronized (DriveTrainSubsystem.this) {
+                switch (mDriveStates) {
+                    case DRIVING:
+                        return;
+                    case CREEP:
+                        return;
+                    case NOTHING:
+                        return;
+                    case PATH_FOLLOWING:
+                        // TODO (when path follower gets added)
+                        return;
+                }
+            }
+            
+        }
+
+        @Override
+        public void onStart(double timestamp) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void onStop(double timestamp) {
+            // TODO Auto-generated method stub
+            
+        }
+        
+    };
 
     public DriveTrainSubsystem(){
         
@@ -50,6 +84,9 @@ public class DriveTrainSubsystem implements Subsystem {
     }
 
     public void setOpenLoop(DriveSignal signal){
+        if (mDriveStates != DriveStates.DRIVING){
+            mDriveStates = DriveStates.DRIVING;
+        }
         leaderLeft.setVoltage(signal.getLeft() * 12);
         leaderRight.setVoltage(signal.getRight() * 12);
     }
@@ -76,9 +113,8 @@ public class DriveTrainSubsystem implements Subsystem {
     }
 
     @Override
-    public void registerEnabledLoops() {
-        // TODO Auto-generated method stub
-        
+    public void registerEnabledLoops(Looper enabledLooper) {
+        enabledLooper.register(mLoop);
     }
     
 }

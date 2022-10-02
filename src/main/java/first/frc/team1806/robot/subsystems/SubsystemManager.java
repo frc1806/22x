@@ -2,6 +2,8 @@ package first.frc.team1806.robot.subsystems;
 
 import java.util.List;
 
+import first.frc.team1806.robot.loop.Looper;
+
 public class SubsystemManager {
 
     private final List<Subsystem> mAllSubsystems;
@@ -14,8 +16,8 @@ public class SubsystemManager {
         mAllSubsystems.forEach((s) -> s.stop());
     }
 
-    public void registerEnabledLoops(){
-        mAllSubsystems.forEach((s) -> s.registerEnabledLoops());
+    public void registerEnabledLoops(Looper enabledLooper){
+        mAllSubsystems.forEach((s) -> s.registerEnabledLoops(enabledLooper));
     }
 
     public void setupDriverTab(){

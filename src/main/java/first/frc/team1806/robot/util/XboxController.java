@@ -141,7 +141,6 @@ public class XboxController extends Joystick {
 	}
 	
 	public boolean getPOVUp() {
-		//TODO, Fix these POV things? Not sure if they work too well.
 		return (getPOV() < 45 || getPOV() > 315) && getPOV() != -1;
 	}
 
