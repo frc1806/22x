@@ -11,9 +11,7 @@ public class DriveTrainSubsystem implements Subsystem {
     public enum DriveStates {
         DRIVING,
         CREEP,
-        VISION,
         PATH_FOLLOWING,
-        PARKING_BRAKE,
         NOTHING,
     }
 
@@ -56,12 +54,6 @@ public class DriveTrainSubsystem implements Subsystem {
         leaderRight.setVoltage(signal.getRight() * 12);
     }
 
-    @Override
-    public void writeToLog() {
-        // TODO Auto-generated method stub
-        
-    }
-
     private synchronized void StopDrive() {
         if (mDriveStates != DriveStates.NOTHING){
             mDriveStates = DriveStates.NOTHING;
@@ -76,23 +68,6 @@ public class DriveTrainSubsystem implements Subsystem {
         StopDrive();
     }
 
-    @Override
-    public void zeroSensors() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void setDebug(boolean _debug) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void retractAll() {
-        // TODO Auto-generated method stub
-        
-    }
 
     @Override
     public void setupDriverTab() {
@@ -101,7 +76,8 @@ public class DriveTrainSubsystem implements Subsystem {
     }
 
     @Override
-    public void outputToSmartDashboard() {
+    public void registerEnabledLoops() {
+        // TODO Auto-generated method stub
         
     }
     
