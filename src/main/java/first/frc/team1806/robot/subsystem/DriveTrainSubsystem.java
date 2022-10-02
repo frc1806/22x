@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkMaxLowLevel;
 
 import first.frc.team1806.robot.RobotMap;
 import first.frc.team1806.robot.util.DriveSignal;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 public class DriveTrainSubsystem implements Subsystem {
 
@@ -30,12 +29,7 @@ public class DriveTrainSubsystem implements Subsystem {
         return mDriveStates;
     }
 
-    private CANSparkMax leaderLeft;
-    private CANSparkMax leaderRight;
-    private CANSparkMax followerLeft;
-    private CANSparkMax followerRight; 
-    private MotorControllerGroup GroupLeft;
-    private MotorControllerGroup GroupRight;
+    private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight;
 
     public DriveTrainSubsystem(){
         
@@ -48,11 +42,11 @@ public class DriveTrainSubsystem implements Subsystem {
         followerLeft.follow(leaderLeft);
         followerRight.follow(leaderRight);
 
-        GroupLeft = new MotorControllerGroup(leaderLeft, followerLeft);
-        GroupRight = new MotorControllerGroup(leaderRight, followerRight);
+        leaderLeft.setInverted(true);
+        followerLeft.setInverted(true);
 
-        GroupLeft.setInverted(true);
-        GroupRight.setInverted(false);
+        leaderRight.setInverted(false);
+        followerRight.setInverted(false);
 
         mDriveStates = DriveStates.DRIVING;
     }
