@@ -8,21 +8,13 @@ import first.frc.team1806.robot.util.CheesyDriveHelper;
 import first.frc.team1806.robot.util.XboxController;
 
 public class OI {
-    private static XboxController DriverController = new XboxController(Constants.kDriverControllerPort, "Driver", Constants.kDriverControllerDefaultConfig);
-    private static XboxController OperatorController = new XboxController(Constants.kOperatorControllerPort, "Operator", Constants.kOperatorControllerDefaultConfig);
+    protected static XboxController DriverController = new XboxController(Constants.kDriverControllerPort, "Driver", Constants.kDriverControllerDefaultConfig);
+    protected static XboxController OperatorController = new XboxController(Constants.kOperatorControllerPort, "Operator", Constants.kOperatorControllerDefaultConfig);
 
     private DriveTrainSubsystem mDriveTrainSubsystem;
     private CheesyDriveHelper mCheesyDriveHelper;
 
     private SendableChooser<DriverControls> controllerConfigChooser;
-
-    public static XboxController GetDriverController(){
-        return DriverController;
-    }
-
-    public static XboxController GetOperatorController(){
-        return OperatorController;
-    }
 
 	private enum DriverControls {
         kForza(
@@ -82,7 +74,7 @@ public class OI {
         controllerConfigChooser = new SendableChooser<DriverControls>();
         controllerConfigChooser.addOption("Forza", DriverControls.kForza);
         controllerConfigChooser.addOption("Classic", DriverControls.kClassic);
-        Robot.GetMainCompetitionTab().add("Driver Controls", controllerConfigChooser).withPosition(2,2);
+        Robot.getMainCompetitionTab().add("Driver Controls", controllerConfigChooser).withPosition(2,2);
 
         mDriveTrainSubsystem = DriveTrainSubsystem.getInstance();
         mCheesyDriveHelper = DriverControls.kForza.getCheesyDriveHelper();

@@ -20,7 +20,7 @@ public class SubsystemManager {
         mAllSubsystems.forEach((s) -> s.registerEnabledLoops(enabledLooper));
     }
 
-    public void setupDriverTab(){
+    public void setupDriverTabs(){
         mAllSubsystems.forEach((s) -> s.setupDriverTab());
     }
 }

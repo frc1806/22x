@@ -1,5 +1,6 @@
 package first.frc.team1806.robot;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,16 +8,26 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import first.frc.team1806.robot.loop.Looper;
+import first.frc.team1806.robot.subsystems.DriveTrainSubsystem;
+import first.frc.team1806.robot.subsystems.SubsystemManager;
 
 public class Robot extends TimedRobot {
   private static ShuffleboardTab CompetitionTab;
+  private static final SubsystemManager SUBSYSTEM_MANAGER = new SubsystemManager(Arrays.asList(DriveTrainSubsystem.getInstance()));
   private OI mOI;
+
+  private Looper mEnabledLooper = new Looper();
+  private Looper mDisabledLooper = new Looper();
 
   @Override
   public void robotInit() {
     CompetitionTab = Shuffleboard.getTab("Main Competition Tab");
-    SetupMainCompetitionTab();
+    setupMainCompetitionTab();
     mOI = new OI();
+
+    SUBSYSTEM_MANAGER.registerEnabledLoops(mEnabledLooper);
+    SUBSYSTEM_MANAGER.setupDriverTabs();
   }
 
 
@@ -26,7 +37,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    
+    mEnabledLooper.start();
+    mDisabledLooper.stop();
   }
 
   /** This function is called periodically during autonomous. */
@@ -38,7 +50,8 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    
+    mEnabledLooper.start();
+    mDisabledLooper.stop();
   }
 
   /** This function is called periodically during operator control. */
@@ -49,7 +62,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when the robot is disabled. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    mEnabledLooper.stop();
+    mDisabledLooper.start();
+  }
 
   /** This function is called periodically when disabled. */
   @Override
@@ -61,15 +77,11 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    mEnabledLooper.start();
+    mDisabledLooper.stop();
+  }
 
-  /** This function is called once when the robot is first started up. */
-  @Override
-  public void simulationInit() {}
-
-  /** This function is called periodically whilst in simulation. */
-  @Override
-  public void simulationPeriodic() {}
 
   private static Map<String, Object> Delay = new HashMap<>();
 
@@ -79,13 +91,13 @@ public class Robot extends TimedRobot {
     Delay.put("Block Increment", 0.01d);
   }
 
-  private void SetupMainCompetitionTab(){
+  private void setupMainCompetitionTab(){
     CompetitionTab.addCamera("Front Camera", "FrontCamera", "None").withPosition(4,1);
     CompetitionTab.addPersistent("Auto Delay", 0).withProperties(Delay)
       .withWidget(BuiltInWidgets.kNumberSlider).withSize(2, 1).withPosition(0, 0).getEntry();
   }
 
-  public static ShuffleboardTab GetMainCompetitionTab(){
+  public static ShuffleboardTab getMainCompetitionTab(){
     return CompetitionTab;
   }
 }
