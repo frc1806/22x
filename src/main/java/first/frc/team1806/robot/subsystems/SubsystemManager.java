@@ -1,4 +1,4 @@
-package first.frc.team1806.robot.subsystem;
+package first.frc.team1806.robot.subsystems;
 
 import java.util.List;
 
