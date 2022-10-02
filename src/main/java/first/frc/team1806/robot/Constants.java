@@ -20,4 +20,6 @@ public class Constants {
 
     public final static int kDriverControllerPort = 0;
     public final static int kOperatorControllerPort = 1;
+
+    public final static double kLooperDt = 0.005;
 }
