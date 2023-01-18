@@ -1,0 +1,258 @@
+[
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Left X Deadzone",
+    "type": "double",
+    "value": 0.12,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Left X Minimum Output",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Left X Linearity",
+    "type": "double",
+    "value": 0.32,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Left Y Deadzone",
+    "type": "double",
+    "value": 0.12,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Left Y Minimum Output",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Left Y Linearity",
+    "type": "double",
+    "value": 0.32,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Right X Deadzone",
+    "type": "double",
+    "value": 0.12,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Right X Minimum Output",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Right X Linearity",
+    "type": "double",
+    "value": 0.32,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Right Y Deadzone",
+    "type": "double",
+    "value": 0.12,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Right Y Minimum Output",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Right Y Linearity",
+    "type": "double",
+    "value": 0.32,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Trigger Deadzone",
+    "type": "double",
+    "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Trigger Minimum Output",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Trigger Linearity",
+    "type": "double",
+    "value": 0.32,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Driver Controller Configuration/Trigger As Digital Deadzone",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Left X Deadzone",
+    "type": "double",
+    "value": 0.12,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Left X Minimum Output",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Left X Linearity",
+    "type": "double",
+    "value": 0.32,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Left Y Deadzone",
+    "type": "double",
+    "value": 0.12,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Left Y Minimum Output",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Left Y Linearity",
+    "type": "double",
+    "value": 0.32,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Right X Deadzone",
+    "type": "double",
+    "value": 0.12,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Right X Minimum Output",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Right X Linearity",
+    "type": "double",
+    "value": 0.32,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Right Y Deadzone",
+    "type": "double",
+    "value": 0.12,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Right Y Minimum Output",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Right Y Linearity",
+    "type": "double",
+    "value": 0.32,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Trigger Deadzone",
+    "type": "double",
+    "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Trigger Minimum Output",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Trigger Linearity",
+    "type": "double",
+    "value": 0.32,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Operator Controller Configuration/Trigger As Digital Deadzone",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  }
+]

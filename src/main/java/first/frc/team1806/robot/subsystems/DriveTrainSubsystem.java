@@ -34,6 +34,7 @@ public class DriveTrainSubsystem implements Subsystem {
     }
 
     private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight;
+
     private Loop mLoop = new Loop() {
         @Override
         public void onLoop(double timestamp) {

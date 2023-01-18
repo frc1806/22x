@@ -3,7 +3,7 @@ package first.frc.team1806.robot.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
@@ -24,22 +24,22 @@ public class XboxControllerConfigDashboard {
         CONTROLLER_CONFIG_SLIDER_PROPS.put("Block increment", 0.01d);
     }
     ShuffleboardTab controllerConfigTab;
-    private NetworkTableEntry leftXDeadzone;
-    private NetworkTableEntry leftXMinimumOutput;
-    private NetworkTableEntry leftXLinearity;
-    private NetworkTableEntry leftYDeadzone;
-    private NetworkTableEntry leftYMinimumOutput;
-    private NetworkTableEntry leftYLinearity;
-    private NetworkTableEntry rightXDeadzone;
-    private NetworkTableEntry rightXMinimumOutput;
-    private NetworkTableEntry rightXLinearity;
-    private NetworkTableEntry rightYDeadzone;
-    private NetworkTableEntry rightYMinimumOutput;
-    private NetworkTableEntry rightYLinearity;
-    private NetworkTableEntry triggerDeadzone;
-    private NetworkTableEntry triggerMinimumOutput;
-    private NetworkTableEntry triggerLinearity;
-    private NetworkTableEntry triggerAsDigitalDeadzone;
+    private GenericEntry leftXDeadzone;
+    private GenericEntry leftXMinimumOutput;
+    private GenericEntry leftXLinearity;
+    private GenericEntry leftYDeadzone;
+    private GenericEntry leftYMinimumOutput;
+    private GenericEntry leftYLinearity;
+    private GenericEntry rightXDeadzone;
+    private GenericEntry rightXMinimumOutput;
+    private GenericEntry rightXLinearity;
+    private GenericEntry rightYDeadzone;
+    private GenericEntry rightYMinimumOutput;
+    private GenericEntry rightYLinearity;
+    private GenericEntry triggerDeadzone;
+    private GenericEntry triggerMinimumOutput;
+    private GenericEntry triggerLinearity;
+    private GenericEntry triggerAsDigitalDeadzone;
 
     public XboxControllerConfigDashboard(ShuffleboardTab configTab, XboxControllerConfigValues configValues) {
         if(configValues == null)

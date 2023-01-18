@@ -22,4 +22,15 @@ public class Constants {
     public final static int kOperatorControllerPort = 1;
 
     public final static double kLooperDt = 0.005;
+
+    public final static String kCompressorKey = "Compressor ";
+    public final static String kDriveTrainKey = "DriveTrain ";
+    public final static String kRobotStateKey = "robot";
+
+    public final static boolean enableAutoInTeleOp = false;
+    public final static boolean enableDebugMode = true;
+    public final static double kDriveWheelDiameterInches = 4;
+    public final static double kTrackWidthInches = 27.5;
+    public final static double kTrackScrubFactor = .978;
+
 }

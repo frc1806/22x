@@ -91,6 +91,7 @@ public class OI {
 		else
 		{
 			currentControllerConfig = DriverControls.kClassic;
+            mCheesyDriveHelper = DriverControls.kClassic.getCheesyDriveHelper();
 		}
         //Operator Controls
         //None
