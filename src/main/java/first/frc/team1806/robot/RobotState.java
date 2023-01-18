@@ -20,8 +20,8 @@ public class RobotState {
 
 
     // FPGATimestamp -> RigidTransform2d or Rotation2d
-    private edu.wpi.first.util.InterpolatingTreeMap<InterpolatingDouble, RigidTransform2d> field_to_vehicle_;
-    private edu.wpi.first.math.geometry.Twist2d vehicle_velocity_predicted_;
+    private InterpolatingTreeMap<InterpolatingDouble, RigidTransform2d> field_to_vehicle_;
+    private Twist2d vehicle_velocity_predicted_;
     private Twist2d vehicle_velocity_measured_;
     private double distance_driven_;
     private RobotState() {
