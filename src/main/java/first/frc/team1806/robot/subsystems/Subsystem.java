@@ -8,5 +8,9 @@ public interface Subsystem {
 
     public abstract void setupDriverTab();
 
+    public abstract void outputToSmartDashboard();
+
     public abstract void registerEnabledLoops(Looper enabledLooper);
+
+    public abstract void zeroSensors();
 }

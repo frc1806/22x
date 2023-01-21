@@ -5,12 +5,19 @@ import java.util.function.DoubleSupplier;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.SPI;
+import first.frc.team1806.robot.Constants;
 import first.frc.team1806.robot.Robot;
 import first.frc.team1806.robot.RobotMap;
+import first.frc.team1806.robot.RobotState;
 import first.frc.team1806.robot.loop.Loop;
 import first.frc.team1806.robot.loop.Looper;
 import first.frc.team1806.robot.util.DriveSignal;
+import first.frc.team1806.robot.util.NavX;
+import first.frc.team1806.robot.util.Rotation2d;
 
 public class DriveTrainSubsystem implements Subsystem {
 
@@ -20,6 +27,8 @@ public class DriveTrainSubsystem implements Subsystem {
         PATH_FOLLOWING,
         NOTHING,
     }
+
+    boolean debug = true;
 
     private DriveStates mDriveStates;
 
@@ -34,10 +43,21 @@ public class DriveTrainSubsystem implements Subsystem {
     }
 
     private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight;
+    private Encoder leftEncoder, rightEncoder;
+    private NavX navx;
+
+    private RobotState mRobotState = RobotState.getInstance();
+
+    private double leftEncoderDistance, rightEncoderDistance, leftVelocity, rightVelocity;
 
     private Loop mLoop = new Loop() {
         @Override
         public void onLoop(double timestamp) {
+            leftEncoderDistance = leftEncoder.getDistance();
+            rightEncoderDistance = rightEncoder.getDistance();
+            leftVelocity = leftEncoder.getRate();
+            rightVelocity = rightEncoder.getRate();
+
             synchronized (DriveTrainSubsystem.this) {
                 switch (mDriveStates) {
                     case DRIVING:
@@ -56,6 +76,7 @@ public class DriveTrainSubsystem implements Subsystem {
 
         @Override
         public void onStart(double timestamp) {
+            setNeutralMode(false);
             setOpenLoop(DriveSignal.NEUTRAL);
             
         }
@@ -76,6 +97,11 @@ public class DriveTrainSubsystem implements Subsystem {
         followerLeft = new CANSparkMax(RobotMap.leftFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
         followerRight = new CANSparkMax(RobotMap.rightFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
 
+        leftEncoder = new Encoder(Constants.kDIODriveLeftEncoderA, Constants.kDIODriveLeftEncoderB);
+        rightEncoder = new Encoder(Constants.kDIODriveRightEncoderA, Constants.kDIODriveRightEncoderB);
+
+        navx = new NavX(SPI.Port.kMXP);
+
         followerLeft.follow(leaderLeft);
         followerRight.follow(leaderRight);
 
@@ -86,6 +112,11 @@ public class DriveTrainSubsystem implements Subsystem {
         followerRight.setInverted(false);
 
         mDriveStates = DriveStates.DRIVING;
+
+        leftEncoderDistance = 0;
+        rightEncoderDistance = 0;
+        leftVelocity = 0;
+        rightVelocity = 0;
     }
 
     public void setOpenLoop(DriveSignal signal){
@@ -127,6 +158,35 @@ public class DriveTrainSubsystem implements Subsystem {
         followerLeft.setIdleMode(currentMode);
         followerRight.setIdleMode(currentMode);
     }
+
+    public double getLeftDistanceInches(){
+        return leftEncoderDistance * Constants.kDriveInchesPerCount;
+    }
+
+    public double getRightDistanceInches(){
+        return rightEncoderDistance * Constants.kDriveInchesPerCount;
+    }
+
+    public double getLeftVelocityInchesPerSec() {
+		return leftVelocity * Constants.kDriveInchesPerCount / 60;
+	}
+
+    public double getRightVelocityInchesPerSec(){
+        return rightVelocity * Constants.kDriveInchesPerCount / 60;
+    }
+
+    public String returnDriveState() {
+		return mDriveStates.toString();
+	}
+
+    public synchronized Rotation2d getGyroYaw() {
+		return navx.getYaw();
+	}
+
+    public synchronized void setGyroAngle(Rotation2d angle) {
+		navx.zeroYaw();
+		navx.setAngleAdjustment(angle);
+	}
 
     public boolean isDriving(){
         return mDriveStates == DriveStates.DRIVING;
@@ -182,4 +242,36 @@ public class DriveTrainSubsystem implements Subsystem {
         enabledLooper.register(mLoop);
     }
     
+    @Override
+    public void zeroSensors(){
+        leftEncoderDistance = 0;
+        rightEncoderDistance = 0;
+    }
+
+    @Override
+    public void outputToSmartDashboard(){
+        if(debug){
+            SmartDashboard.putNumber(Constants.kDriveTrainKey + "position left (in)", getLeftDistanceInches());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "position right (in)", getRightDistanceInches());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "velocity left (in/sec)",
+					getLeftVelocityInchesPerSec());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "velocity right (in/sec)",
+					getRightVelocityInchesPerSec());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "encoder count left", leftEncoderDistance);
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "encoder count right", rightEncoderDistance);
+
+			SmartDashboard.putString(Constants.kDriveTrainKey + "drive state", returnDriveState());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "navX yaw", getGyroYaw().getDegrees());
+
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp leaderLeft", leaderLeft.getMotorTemperature());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp leftA", followerLeft.getMotorTemperature());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp leaderRight", leaderRight.getMotorTemperature());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp rightA", followerRight.getMotorTemperature());
+
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps leaderLeft", leaderLeft.getOutputCurrent());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps leftA", followerLeft.getOutputCurrent());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps leaderRight", leaderRight.getOutputCurrent());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps rightA", followerRight.getOutputCurrent());
+        }
+    }
 }

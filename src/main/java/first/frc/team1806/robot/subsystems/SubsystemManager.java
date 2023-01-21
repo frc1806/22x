@@ -23,4 +23,12 @@ public class SubsystemManager {
     public void setupDriverTabs(){
         mAllSubsystems.forEach((s) -> s.setupDriverTab());
     }
+
+    public void outputToSmartDashboard(){
+        mAllSubsystems.forEach((s) -> s.outputToSmartDashboard());
+    }
+
+    public void zeroSensors(){
+        mAllSubsystems.forEach((s) -> s.zeroSensors());
+    }
 }
