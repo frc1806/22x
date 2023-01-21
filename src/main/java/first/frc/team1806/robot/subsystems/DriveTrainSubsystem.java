@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import first.frc.team1806.robot.Constants;
 import first.frc.team1806.robot.Robot;
 import first.frc.team1806.robot.RobotMap;
@@ -42,7 +43,8 @@ public class DriveTrainSubsystem implements Subsystem {
         return mDriveStates;
     }
 
-    private CANSparkMax leaderLeft, leaderRight, followerLeft, followerRight;
+    private CANSparkMax leftLeader, rightLeader, leftFollower, rightFollower;
+    private MotorControllerGroup leftMotorGroup, rightMotorGroup;
     private Encoder leftEncoder, rightEncoder;
     private NavX navx;
 
@@ -91,25 +93,25 @@ public class DriveTrainSubsystem implements Subsystem {
 
     public DriveTrainSubsystem(){
         
-        leaderLeft = new CANSparkMax(RobotMap.leftLeader, CANSparkMaxLowLevel.MotorType.kBrushless);
-        leaderRight = new CANSparkMax(RobotMap.rightLeader, CANSparkMaxLowLevel.MotorType.kBrushless);
+        leftLeader = new CANSparkMax(RobotMap.leftLeader, CANSparkMaxLowLevel.MotorType.kBrushless);
+        rightLeader = new CANSparkMax(RobotMap.rightLeader, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-        followerLeft = new CANSparkMax(RobotMap.leftFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
-        followerRight = new CANSparkMax(RobotMap.rightFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
+        leftFollower = new CANSparkMax(RobotMap.leftFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
+        rightFollower = new CANSparkMax(RobotMap.rightFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+        leftMotorGroup = new MotorControllerGroup(leftLeader, leftFollower);
+        rightMotorGroup = new MotorControllerGroup(rightLeader, rightFollower);
 
         leftEncoder = new Encoder(Constants.kDIODriveLeftEncoderA, Constants.kDIODriveLeftEncoderB);
         rightEncoder = new Encoder(Constants.kDIODriveRightEncoderA, Constants.kDIODriveRightEncoderB);
 
         navx = new NavX(SPI.Port.kMXP);
 
-        followerLeft.follow(leaderLeft);
-        followerRight.follow(leaderRight);
+        leftFollower.follow(leftLeader);
+        rightFollower.follow(rightLeader);
 
-        leaderLeft.setInverted(true);
-        followerLeft.setInverted(true);
-
-        leaderRight.setInverted(false);
-        followerRight.setInverted(false);
+        leftMotorGroup.setInverted(true);
+        rightMotorGroup.setInverted(false);
 
         mDriveStates = DriveStates.DRIVING;
 
@@ -124,8 +126,8 @@ public class DriveTrainSubsystem implements Subsystem {
             mDriveStates = DriveStates.DRIVING;
             System.out.println("Driving");
         }
-        leaderLeft.setVoltage(signal.getLeft() * 12);
-        leaderRight.setVoltage(signal.getRight() * 12);
+        leftLeader.setVoltage(signal.getLeft() * 12);
+        rightLeader.setVoltage(signal.getRight() * 12);
     }
 
     public synchronized void setCreepMode(DriveSignal signal){
@@ -133,30 +135,30 @@ public class DriveTrainSubsystem implements Subsystem {
             mDriveStates = DriveStates.CREEP;
             System.out.println("Creeping");
         }
-        leaderLeft.setVoltage(signal.getLeft() / 2);
-        leaderRight.setVoltage(signal.getRight() / 2);
+        leftLeader.setVoltage(signal.getLeft() / 2);
+        rightLeader.setVoltage(signal.getRight() / 2);
     }
 
     public synchronized void setCoastMode(){
-        leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        leftLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        leftFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
     }
 
     public synchronized void setBrakeMode(){
-        leaderLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        leaderRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        followerLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        followerRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        leftLeader.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightLeader.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        leftFollower.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightFollower.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }
 
     public synchronized void setNeutralMode(boolean brake){
         CANSparkMax.IdleMode currentMode = brake ? CANSparkMax.IdleMode.kBrake : CANSparkMax.IdleMode.kCoast;
-        leaderLeft.setIdleMode(currentMode);
-        leaderRight.setIdleMode(currentMode);
-        followerLeft.setIdleMode(currentMode);
-        followerRight.setIdleMode(currentMode);
+        leftLeader.setIdleMode(currentMode);
+        rightLeader.setIdleMode(currentMode);
+        leftFollower.setIdleMode(currentMode);
+        rightFollower.setIdleMode(currentMode);
     }
 
     public double getLeftDistanceInches(){
@@ -205,8 +207,8 @@ public class DriveTrainSubsystem implements Subsystem {
             mDriveStates = DriveStates.DRIVING;
         }
 
-        leaderLeft.setVoltage(0);
-        leaderRight.setVoltage(0);
+        leftLeader.setVoltage(0);
+        rightLeader.setVoltage(0);
     }
     
     @Override
@@ -221,7 +223,7 @@ public class DriveTrainSubsystem implements Subsystem {
 
         @Override
         public double getAsDouble() {
-            return leaderLeft.getAppliedOutput();
+            return leftLeader.getAppliedOutput();
         }
            
        }).withWidget(BuiltInWidgets.kNumberBar).withPosition(3,0);
@@ -230,7 +232,7 @@ public class DriveTrainSubsystem implements Subsystem {
 
         @Override
         public double getAsDouble() {
-            return leaderRight.getAppliedOutput();
+            return rightLeader.getAppliedOutput();
         }
            
        }).withWidget(BuiltInWidgets.kNumberBar).withPosition(3,1);
@@ -263,15 +265,15 @@ public class DriveTrainSubsystem implements Subsystem {
 			SmartDashboard.putString(Constants.kDriveTrainKey + "drive state", returnDriveState());
 			SmartDashboard.putNumber(Constants.kDriveTrainKey + "navX yaw", getGyroYaw().getDegrees());
 
-			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp leaderLeft", leaderLeft.getMotorTemperature());
-			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp leftA", followerLeft.getMotorTemperature());
-			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp leaderRight", leaderRight.getMotorTemperature());
-			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp rightA", followerRight.getMotorTemperature());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp leftLeader", leftLeader.getMotorTemperature());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp leftA", leftFollower.getMotorTemperature());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp rightLeader", rightLeader.getMotorTemperature());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "temp rightA", rightFollower.getMotorTemperature());
 
-			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps leaderLeft", leaderLeft.getOutputCurrent());
-			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps leftA", followerLeft.getOutputCurrent());
-			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps leaderRight", leaderRight.getOutputCurrent());
-			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps rightA", followerRight.getOutputCurrent());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps leftLeader", leftLeader.getOutputCurrent());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps leftA", leftFollower.getOutputCurrent());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps rightLeader", rightLeader.getOutputCurrent());
+			SmartDashboard.putNumber(Constants.kDriveTrainKey + "amps rightA", rightFollower.getOutputCurrent());
         }
     }
 }
