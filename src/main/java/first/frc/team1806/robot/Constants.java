@@ -34,6 +34,7 @@ public class Constants {
     public final static double kTrackScrubFactor = .978;
 
     //DriveTrain
+    public final static int kDriveTrainPerMotorCurrentLimit = 70;
     public final static double kCountsPerInch = 168.359374;
     public final static double kDriveInchesPerCount = 1/kCountsPerInch;
     public final static int kDIODriveLeftEncoderA = 0;

@@ -32,7 +32,9 @@ public class Robot extends TimedRobot {
 
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    allPeriodic();
+  }
 
 
   @Override
@@ -44,7 +46,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-
+    allPeriodic();
   }
 
   /** This function is called once when teleop is enabled. */
@@ -57,6 +59,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    allPeriodic();
     mOI.runCommands();
   }
 
@@ -69,7 +72,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically when disabled. */
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    allPeriodic();
+  }
 
   /** This function is called once when test mode is enabled. */
   @Override
@@ -78,6 +83,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
+    allPeriodic();
     mEnabledLooper.start();
     mDisabledLooper.stop();
   }
@@ -99,5 +105,9 @@ public class Robot extends TimedRobot {
 
   public static ShuffleboardTab getMainCompetitionTab(){
     return CompetitionTab;
+  }
+
+  public void allPeriodic(){
+    SUBSYSTEM_MANAGER.outputToSmartDashboard();
   }
 }
