@@ -15,9 +15,12 @@ import first.frc.team1806.robot.RobotMap;
 import first.frc.team1806.robot.RobotState;
 import first.frc.team1806.robot.loop.Loop;
 import first.frc.team1806.robot.loop.Looper;
+import first.frc.team1806.robot.util.CheesyDriveHelper;
 import first.frc.team1806.robot.util.DriveSignal;
 import first.frc.team1806.robot.util.NavX;
 import first.frc.team1806.robot.util.Rotation2d;
+
+import first.frc.team1806.robot.subsystems.VisionSubsystem;
 
 public class DriveTrainSubsystem implements Subsystem {
 
@@ -33,6 +36,7 @@ public class DriveTrainSubsystem implements Subsystem {
     private DriveStates mDriveStates;
 
     private static DriveTrainSubsystem mDriveTrainSubsystem = new DriveTrainSubsystem();
+    private VisionSubsystem mVisionSubsystem =VisionSubsystem.GetInstance();
 
     public static DriveTrainSubsystem getInstance(){
         return mDriveTrainSubsystem;
@@ -123,6 +127,18 @@ public class DriveTrainSubsystem implements Subsystem {
         leftVelocity = 0;
         rightVelocity = 0;
     }
+
+    /**
+    * Turns the robot towards the goal and allows the driver to control the throttle to drive to the goal 
+    * @param driveHelperToUse the {@link CheesyDriveHelper} to use for deadzones and such
+    * @param throttle the driver's throttle input
+    */
+    public void setOpenLoopWithVision(CheesyDriveHelper driveHelperToUse, double throttle)
+    {
+       
+        driveHelperToUse.cheesyDrive(throttle, mVisionSubsystem.getTarget() * .01, true, true);
+    }
+
 
     public void setOpenLoop(DriveSignal signal){
         if (mDriveStates != DriveStates.DRIVING){
