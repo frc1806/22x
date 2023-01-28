@@ -98,6 +98,7 @@ public class OI {
 
         //Driver Controls
         boolean quickTurn;
+        boolean creepMode;
         double throttle;
         double turn;
 
@@ -108,10 +109,15 @@ public class OI {
             case kClassic:
                 throttle = DriverController.getLeftJoyY();
                 turn = DriverController.getRightJoyX();
-                quickTurn = DriverController.getRightTrigger() > 0;
+                quickTurn = DriverController.getRightTriggerAsDigital();
+                creepMode = DriverController.getLeftTriggerAsDigital();
                 break;
         }
 
-        mDriveTrainSubsystem.setOpenLoop(mCheesyDriveHelper.cheesyDrive(throttle, turn, quickTurn, false));
-    }
+        if(creepMode){
+            mDriveTrainSubsystem.setCreepMode(mCheesyDriveHelper.cheesyDrive(throttle, turn, quickTurn, true));
+        } else {
+            mDriveTrainSubsystem.setOpenLoop(mCheesyDriveHelper.cheesyDrive(throttle, turn, quickTurn, true));
+            }
+        }
 }

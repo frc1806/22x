@@ -1,25 +1,25 @@
 {
   "MainWindow": {
     "GLOBAL": {
-      "height": "991",
-      "maximized": "1",
+      "height": "900",
+      "maximized": "0",
       "style": "0",
       "userScale": "2",
-      "width": "1920",
-      "xpos": "0",
-      "ypos": "29"
+      "width": "1600",
+      "xpos": "-1",
+      "ypos": "-1"
     }
   },
   "Window": {
     "###FMS": {
       "Collapsed": "0",
       "Pos": "6,675",
-      "Size": "202,214"
+      "Size": "336,164"
     },
     "###Joysticks": {
       "Collapsed": "0",
       "Pos": "312,581",
-      "Size": "976,272"
+      "Size": "976,278"
     },
     "###NetworkTables": {
       "Collapsed": "0",

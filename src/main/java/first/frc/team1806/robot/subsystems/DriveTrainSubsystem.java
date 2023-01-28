@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import first.frc.team1806.robot.Constants;
 import first.frc.team1806.robot.Robot;
 import first.frc.team1806.robot.RobotMap;
@@ -44,7 +43,6 @@ public class DriveTrainSubsystem implements Subsystem {
     }
 
     private CANSparkMax leftLeader, rightLeader, leftFollower, rightFollower;
-    private MotorControllerGroup leftMotorGroup, rightMotorGroup;
     private Encoder leftEncoder, rightEncoder;
     private NavX navx;
 
@@ -99,9 +97,6 @@ public class DriveTrainSubsystem implements Subsystem {
         leftFollower = new CANSparkMax(RobotMap.leftFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightFollower = new CANSparkMax(RobotMap.rightFollower, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-        leftMotorGroup = new MotorControllerGroup(leftLeader, leftFollower);
-        rightMotorGroup = new MotorControllerGroup(rightLeader, rightFollower);
-
         leftEncoder = new Encoder(Constants.kDIODriveLeftEncoderA, Constants.kDIODriveLeftEncoderB);
         rightEncoder = new Encoder(Constants.kDIODriveRightEncoderA, Constants.kDIODriveRightEncoderB);
 
@@ -110,8 +105,16 @@ public class DriveTrainSubsystem implements Subsystem {
         leftFollower.follow(leftLeader);
         rightFollower.follow(rightLeader);
 
-        leftMotorGroup.setInverted(true);
-        rightMotorGroup.setInverted(false);
+        leftLeader.setInverted(true);
+        leftFollower.setInverted(true);
+        rightLeader.setInverted(false);
+        rightFollower.setInverted(false);
+
+        leftLeader.setSmartCurrentLimit(Constants.kDriveTrainPerMotorCurrentLimit);
+        leftFollower.setSmartCurrentLimit(Constants.kDriveTrainPerMotorCurrentLimit);
+        rightLeader.setSmartCurrentLimit(Constants.kDriveTrainPerMotorCurrentLimit);
+        rightFollower.setSmartCurrentLimit(Constants.kDriveTrainPerMotorCurrentLimit);
+
 
         mDriveStates = DriveStates.DRIVING;
 
@@ -135,8 +138,8 @@ public class DriveTrainSubsystem implements Subsystem {
             mDriveStates = DriveStates.CREEP;
             System.out.println("Creeping");
         }
-        leftLeader.setVoltage(signal.getLeft() / 2);
-        rightLeader.setVoltage(signal.getRight() / 2);
+        leftLeader.setVoltage(signal.getLeft() * 3);
+        rightLeader.setVoltage(signal.getRight() * 3);
     }
 
     public synchronized void setCoastMode(){
